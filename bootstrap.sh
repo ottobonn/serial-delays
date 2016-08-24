@@ -4,8 +4,8 @@
 
 # Prepare build dependencies
 echo "Installing dependencies"
-apt-get update
-apt-get install -y build-essential openssl libssl-dev pkg-config git linux-tools-generic curl
+sudo apt-get update
+sudo apt-get install -y build-essential openssl libssl-dev pkg-config git linux-tools curl
 
 # Get node source code
 # cd /vagrant/
@@ -28,12 +28,15 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.6/install.sh | b
 
 # Install network utilities
 echo "Installing network utilities"
-apt-get install -y iproute hping3
+sudo apt-get install -y iproute hping3
 
 # Install USB utils
 echo "Installing USB utilities"
-apt-get install -y usbutils # socat
+sudo apt-get install -y usbutils # socat
 
 # Install debugging tools
 echo "Installing debugging tools"
-apt-get install -y gdb linux-tools-3.16
+sudo apt-get install -y gdb linux-tools-3.16
+
+# Give vagrant user serialport permissions
+sudo usermod -aG dialout vagrant
