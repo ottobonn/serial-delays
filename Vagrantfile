@@ -5,21 +5,25 @@ unless Vagrant.has_plugin?("vagrant-vbguest")
   raise 'Please install vagrant-vbguest to enable USB and VirtualBox shared folders.'
 end
 
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
 Vagrant.configure("2") do |config|
-
-  config.vm.provision :shell, path: "bootstrap.sh"
-
-  config.vm.provision :shell, path: "configure.sh", run: "always"
 
   config.vm.box = "debian/jessie64"
 
   config.vm.synced_folder ".", "/vagrant/", type: "virtualbox"
 
+  config.vm.provision "shell", path: "install-utilities.sh"
+
+  # Give vagrant user serial port permissions
+  config.vm.provision "shell", inline: "sudo usermod -aG dialout vagrant"
+
+  config.vm.provision "shell", path: "install-node.sh", privileged: false
+
+  config.vm.provision "shell", path: "simulate-latency.sh", run: "always"
+
   config.vm.provider "virtualbox" do |vb|
+    # Make the VM name more descriptive
+    vb.name = "serial-delays Testing Environment"
+
     # Increase RAM limit for linking node
     vb.customize ["modifyvm", :id, "--memory", "1024"]
 
@@ -27,7 +31,7 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--usb", "on"]
     vb.customize ["modifyvm", :id, "--usbehci", "on"]
 
-    # Attach Arduinos to VB
+    # Attach Arduinos to the VM
     vb.customize ["usbfilter", "add", "0",
         "--target", :id,
         "--name", "Any Arduino",

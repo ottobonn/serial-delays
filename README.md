@@ -36,7 +36,9 @@ Let's reproduce the issue!
 * Install [Vagrant](https://www.vagrantup.com/downloads.html)
 * Install [VirtualBox](https://www.virtualbox.org/)
 * Install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads)
-(for shared folders)
+(for Vagrant's shared folders and USB serial devices, if desired)
+* Install the vagrant-vbguest plugin using
+`vagrant plugin install vagrant-vbguest` (for shared live-syncing folders)
 * In the root of this repo, run `vagrant up` to start the VM
 
 ## Hardware Setup
@@ -52,12 +54,7 @@ VirtualBox settings.
 
 ## Reproducing the slowdown
 
-The VM will come provisioned with [NVM](https://github.com/creationix/nvm), so
-the first step is to select a version of Node. We reliably reproduce this bug
-on multiple versions, but as a starting place, use 4.2.6.
-
 1. Log into the VM with `vagrant ssh`
-* Install Node with `nvm install 4.2.6`
 * Move to the Vagrant shared folder with `cd /vagrant`
 * Run a test with `node [test-name]`, where `[test-name]` is one of `fs-test` or
 `serial-test`. We can simplify the test to use one thread in the `libuv`

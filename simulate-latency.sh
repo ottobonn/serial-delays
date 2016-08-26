@@ -3,8 +3,14 @@
 # This script configures the network to simulate high latency for everything
 # except port 22 (SSH)
 
+# Run as root user
+
 echo "Configuring network delay with tc"
 
+sudo apt-get install -y iproute
+
+# Clear eth0 quese rules
+sudo tc qdisc del dev eth0 root
 # Add root queueing discipline
 sudo tc qdisc add dev eth0 handle 1: root htb
 # Add top-level class to hold slow queue
