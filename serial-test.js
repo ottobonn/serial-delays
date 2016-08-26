@@ -21,7 +21,7 @@ serialport.list(function (error, ports) {
     console.log("Port open");
     counter = 0;
     setInterval(function () {
-      console.log("tick " + counter++);
+       console.log("tick " + counter++);
     }, 1000);
     console.log("write: A");
     port.write("A");
