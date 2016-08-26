@@ -25,7 +25,7 @@ reproduces it most reliably. To reiterate, though, this router in particular is
 one of several (even high-end) routers on which we have seen the issue.
 
 The Vagrant VM simulates a high-latency network, removing the need for a physical
-router. It adds artificial latency to every port except port 22, the SSH port.
+router. It adds artificial latency to port 53, the DNS port.
 For details, see `configure.sh`.
 
 Let's reproduce the issue!
