@@ -16,6 +16,3 @@ sudo cp ./etc-dhcp-dhclient.conf /etc/dhcp/dhclient.conf
 
 # Restart BIND9 to load the new configuration
 sudo service bind9 restart
-
-# Restart our DHCP client
-sudo service dhcpd restart
