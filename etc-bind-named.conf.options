@@ -1,0 +1,17 @@
+options {
+  directory "/var/cache/bind";
+
+  forwarders {
+    // Google DNS servers
+    8.8.8.8;
+    8.8.4.4;
+  };
+
+  // Security options
+  listen-on port 53 { 127.0.0.1; };
+  allow-query { 127.0.0.1; };
+  allow-recursion { 127.0.0.1; };
+  allow-transfer { none; };
+
+  auth-nxdomain no;
+};
